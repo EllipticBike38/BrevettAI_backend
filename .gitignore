@@ -1,1 +1,9 @@
 .venv/
+app/api/__pycache__/
+app/__pycache__/
+app/api/db/__pycache__/
+app/api/v1/__pycache__/
+app/api/v1/endpoints/__pycache__/
+app/api/v1/models/__pycache__/
+app/api/v1/schemas/__pycache__/
+app/api/v1/services/__pycache__/
