@@ -8,4 +8,4 @@ class PatentModel(Base):
     uuid = Column(Integer, primary_key=True, index=True)
     name = Column(String)
     status = Column(String)  # "completed" or "pending"
-    description = Column(String)
+    description = Column(String, nullable=True)

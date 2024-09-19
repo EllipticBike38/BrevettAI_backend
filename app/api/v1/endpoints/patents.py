@@ -1,8 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from typing import Optional
 from crud.crud_patent import create_patent
 from sqlalchemy.orm import Session
-from db.session import SessionLocal
+from db.session import get_db
 
 '''
 salva un brevetto non tuo (l'utente manda l'id del brevetto preesistente)
@@ -21,10 +21,9 @@ router = APIRouter()
 async def save_patent(
         name: str,
         body: Optional[str],
-        db: Session = SessionLocal()
+        db: Session = Depends(get_db)
 ) -> None:
-    patent = create_patent(1, name, "pending", body, db)
-    print(patent)
+    create_patent(1, name, "pending", body, db)
 
 
 #update del brevetto tuo (l'utente aggiunge/modifica corpo e titolo del brevetto)
