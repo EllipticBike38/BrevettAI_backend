@@ -1,11 +1,13 @@
 from pydantic import BaseModel
 
+
+class Message(BaseModel):
+    id: int
+    text: str
+    order: int
+
+
 class Chat(BaseModel):
     id: int
     name: str
-    path: str
-
-    
-class Message(BaseModel):
-    text: str
-
+    messages: list[Message]
