@@ -1,15 +1,23 @@
 from api.v1.models.user import UserModel, PatentModel
 from api.db.session import SessionLocal
 from api.core.security import verify_password, create_access_token
-
+from fastapi import FastAPI, Depends, HTTPException,status
 class UserService:
     def __init__(self):
         self.db = SessionLocal()
 
     def register_user(self, user):
-        db_user = UserModel(username=user.username, password=user.password)
-        self.db.add(db_user)
-        self.db.commit()
+        existing_user = session.query(models.User).filter_by(email=user.email).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Email already registered")
+
+        encrypted_password = get_hashed_password(user.password)
+
+        new_user = models.User(username=user.username, email=user.email, password=encrypted_password )
+
+        session.add(new_user)
+        session.commit()
+        session.refresh(new_user)
         return True
 
     def authenticate_user(self, user):
@@ -17,6 +25,10 @@ class UserService:
         if db_user and verify_password(user.password, db_user.password):
             return create_access_token(data={"sub": db_user.username})
         return None
+    
+    def logout(self):
+        # Implementa la logica per il logout
+        return True
 
     def send_message(self, message):
         # Implementa la logica per inviare un messaggio al chatbot

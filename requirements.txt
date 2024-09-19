@@ -1,2 +1,4 @@
 fastapi
 oauth2
+passlib
+jose
