@@ -1,12 +1,13 @@
-from app.models.chat import ChatModel, Message
+from models.chat import ChatModel, Message
 from sqlalchemy.orm import Session
 
 
-def create_chat(id: str, name: str, db: Session):
+def create_chat(name: str, db: Session):
     try:
-        db_chat = ChatModel(id_=id, name=name)
+        db_chat = ChatModel(name=name)
         db.add(db_chat)
         db.commit()
+        return db_chat
     except Exception as e:
         print(f"Error: {e}")
     finally:
@@ -29,6 +30,7 @@ def create_message(id: str, text: str, chat: str, db: Session):
         db_message = Message(id_=id, text=text, order=len(db_chat.messages))
         db.add(db_message)
         db.commit()
+        return db_message
     except Exception as e:
         print(f"Error: {e}")
     finally:
