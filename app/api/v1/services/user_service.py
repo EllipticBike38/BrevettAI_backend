@@ -1,4 +1,5 @@
-from models.user import UserModel, PatentModel
+from models.user import UserModel
+from models.patent import PatentModel
 from db.session import SessionLocal
 from api.core.security import verify_password, create_access_token
 
