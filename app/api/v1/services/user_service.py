@@ -3,12 +3,13 @@ from models.patent import PatentModel
 from db.session import SessionLocal
 from api.core.security import verify_password, create_access_token
 
+
 class UserService:
     def __init__(self):
         self.db = SessionLocal()
 
     def register_user(self, user):
-        db_user = UserModel(username=user.username, password=user.password)
+        db_user = UserModel(username=user.username, password=user.password, email=user.email)
         self.db.add(db_user)
         self.db.commit()
         return True
