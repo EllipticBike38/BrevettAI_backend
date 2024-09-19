@@ -8,13 +8,3 @@ class User(BaseModel):
 class Login(BaseModel):
     username: str
     password: str
-
-class Message(BaseModel):
-    text: str
-
-class Chat(BaseModel):
-    name: str
-
-class Patent(BaseModel):
-    title: str
-    status: str
