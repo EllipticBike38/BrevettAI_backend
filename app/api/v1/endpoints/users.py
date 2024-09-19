@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends, status
+import crud.crud_user
 from models.user import UserModel
 from db.session import get_db
 from schemas.user import User
@@ -6,6 +7,7 @@ from api.v1.services.user_service import UserService
 from api.v1.auth_service import get_current_user_email
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+import crud
 
 
 router = APIRouter()
@@ -37,7 +39,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(),
 
 @router.get("/profile")
 async def get_profile(email: str = Depends(get_current_user_email)):
-    user = user_service.get_user_by_email(email)
+    user = crud.crud_user.get_user (email)
     if user:
         return user
     raise HTTPException(status_code=404, detail="Utente non trovato")
