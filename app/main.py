@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from api.v1.endpoints import patents, chatbot
+from .api.v1.endpoints import patents, chatbot
 
 app = FastAPI()
 
