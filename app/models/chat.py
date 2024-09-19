@@ -21,5 +21,5 @@ class Message(Base):
     text = Column(String)
     order = Column(Integer)
 
-    chat_uuid = Column(String, ForeignKey("chats.uuid"))
+    chat_uuid = Column(String, ForeignKey("chats.id_"))
     chat = relationship("ChatModel", back_populates="messages")
