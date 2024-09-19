@@ -1,8 +1,11 @@
 from fastapi import APIRouter, HTTPException, Depends, status
+from models.user import UserModel
+from db.session import get_db
 from schemas.user import User
 from api.v1.services.user_service import UserService
 from api.v1.auth_service import get_current_user_email
 from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
 
 
 router = APIRouter()
@@ -10,16 +13,19 @@ user_service = UserService()
 
 
 @router.post("/registrazione")
-async def registrazione(user: User):
-    result = user_service.register_user(user)
-    if result:
-        return {"message": "Utente registrato con successo"}
-    raise HTTPException(status_code=400, detail="Registrazione fallita")
+async def registrazione(user: User,
+                        db: Session = Depends(get_db)):
+    db_user = UserModel(username=user.username, password=user.password, email=user.email)
+    db.add(db_user)
+    db.commit()
+    print(user)
+    return db_user
 
 
 @router.post("/login")
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    token = user_service.authenticate_user(form_data)
+async def login(form_data: OAuth2PasswordRequestForm = Depends(),
+                db: Session = Depends(get_db)):
+    token = user_service.authenticate_user(form_data, db)
     if token:
         return {"access_token": token, "token_type": "bearer"}
     raise HTTPException(
