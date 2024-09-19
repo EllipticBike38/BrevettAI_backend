@@ -17,7 +17,7 @@ class UserService:
 
     def authenticate_user(self, user, db):
         db_user = db.query(UserModel).filter(UserModel.username == user.username).first()
-        if db_user and verify_password(user.password, db_user.password):
+        if db_user and user.password==db_user.password:
             return create_access_token(data={"sub": db_user.username})
         return None
 
