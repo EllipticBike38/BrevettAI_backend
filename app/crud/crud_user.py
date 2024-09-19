@@ -34,3 +34,10 @@ def update_user(email: str,
             db.commit()
     finally:
         db.close()
+
+
+def get_user(email: str, db: Session = SessionLocal()):
+    try:
+        return db.query(UserModel).filter(UserModel.email == email).first()
+    finally:
+        db.close()

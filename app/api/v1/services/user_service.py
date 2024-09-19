@@ -1,20 +1,23 @@
-from models.user import UserModel, PatentModel
-from db.session import SessionLocal
+from fastapi import Depends
+from models.user import UserModel
+from models.patent import PatentModel
 from api.core.security import verify_password, create_access_token
 
-class UserService:
-    def __init__(self):
-        self.db = SessionLocal()
 
-    def register_user(self, user):
-        db_user = UserModel(username=user.username, password=user.password)
-        self.db.add(db_user)
-        self.db.commit()
+class UserService:
+    def __init__(self) -> None:
+        pass
+
+    def register_user(self, user, db):
+        db_user = UserModel(username=user.username, password=user.password, email=user.email)
+        db.add(db_user)
+        db.commit()
+        db.close()
         return True
 
-    def authenticate_user(self, user):
-        db_user = self.db.query(UserModel).filter(UserModel.username == user.username).first()
-        if db_user and verify_password(user.password, db_user.password):
+    def authenticate_user(self, user, db):
+        db_user = db.query(UserModel).filter(UserModel.username == user.username).first()
+        if db_user and user.password==db_user.password:
             return create_access_token(data={"sub": db_user.username})
         return None
 

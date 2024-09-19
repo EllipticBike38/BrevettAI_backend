@@ -1,9 +1,10 @@
-from typing import List, Optional
 from pydantic import BaseModel
+from typing import Optional, List
+import uuid
 
 
 class Patent(BaseModel):
-    uuid: str
+    uuid: uuid.UUID
     name: str
     status: str
     description: Optional[str]

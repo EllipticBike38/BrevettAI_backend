@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from api.v1.schemas.user import Message, Chat, Patent
+from schemas.user import Message, Chat, Patent
 from api.v1.services.user_service import UserService
 
 router = APIRouter()

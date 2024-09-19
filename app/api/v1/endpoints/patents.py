@@ -6,7 +6,7 @@ from db.session import get_db
 
 '''
 salva un brevetto non tuo (l'utente manda l'id del brevetto preesistente)
-recupera tutti i brevetti salati (titoli)
+recupera tutti i brevetti salvati (titoli)
 recupera il tuo singolo brevetto
 recupera il brevetto di un'altro (tramite query su google patents)
 elimina brevetto salvato
@@ -23,7 +23,16 @@ async def save_patent(
         body: Optional[str],
         db: Session = Depends(get_db)
 ) -> None:
-    create_patent(1, name, "pending", body, db)
+    create_patent(name, "pending", body, db)
+
+
+#recupera tutti i brevetti salvati (titoli)
+@router.get("/get_patents/")
+async def get_patents(
+        db: Session = Depends(get_db)
+) -> None:
+    pass
+
 
 
 #update del brevetto tuo (l'utente aggiunge/modifica corpo e titolo del brevetto)
