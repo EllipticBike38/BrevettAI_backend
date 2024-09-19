@@ -1,5 +1,9 @@
 from fastapi import APIRouter
 from typing import Optional
+from crud.crud_patent import create_patent
+from sqlalchemy.orm import Session
+from db.session import SessionLocal
+
 '''
 salva un brevetto non tuo (l'utente manda l'id del brevetto preesistente)
 recupera tutti i brevetti salati (titoli)
@@ -8,7 +12,6 @@ recupera il brevetto di un'altro (tramite query su google patents)
 elimina brevetto salvato
 '''
 
-patents = []
 
 router = APIRouter()
 
@@ -17,13 +20,11 @@ router = APIRouter()
 @router.post("/save_patent/")
 async def save_patent(
         name: str,
-        body: Optional[str]
+        body: Optional[str],
+        db: Session = SessionLocal()
 ) -> None:
-    patents.append({
-        "name" : name,
-        "body" : body
-    })
-    return patents
+    patent = create_patent(1, name, "pending", body, db)
+    print(patent)
 
 
 #update del brevetto tuo (l'utente aggiunge/modifica corpo e titolo del brevetto)

@@ -1,5 +1,5 @@
-from api.v1.models.user import UserModel, PatentModel
-from api.db.session import SessionLocal
+from models.user import UserModel, PatentModel
+from db.session import SessionLocal
 from api.core.security import verify_password, create_access_token
 
 class UserService:
