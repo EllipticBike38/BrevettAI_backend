@@ -1,9 +1,9 @@
 from google_patent_scraper import scraper_class #type: ignore
 from fastapi import APIRouter, Depends
 from typing import List, Optional
-from crud.crud_patent import create_patent
+from ....crud.crud_patent import create_patent
 from sqlalchemy.orm import Session
-from db.session import get_db
+from ....db.session import get_db
 import requests #type: ignore
 
 router = APIRouter()
