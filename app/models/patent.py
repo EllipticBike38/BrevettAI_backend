@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from api.db.base import Base
+from db.base import Base
 
 
 class PatentModel(Base):
